@@ -23,7 +23,7 @@ def update():
     global letter
     global modelabel
     if mode==0:
-        modelabel="Ascii"
+        modelabel="ASCII"
         letter = str(buttonone) + str(buttontwo)+str(buttonthree)+str(buttonfour)+str(buttonfive)+str(buttonsix)+str(buttonseven)+str(buttoneight)
         letter = chr(int(letter,2))
         lbl['text']=letter
@@ -32,6 +32,7 @@ def update():
         letter = str(buttonone) + str(buttontwo)+str(buttonthree)+str(buttonfour)+str(buttonfive)+str(buttonsix)+str(buttonseven)+str(buttoneight)
         letter = int(letter,2)
         lbl['text']=str(letter)
+    window.title("Binary To "+modelabel+" Converter")
     btnswitch['text']=modelabel + " Mode"
 def switchclick(event):
     global mode
