@@ -15,7 +15,7 @@ buttonseven = 0
 buttoneight = 0
 letter=""
 mode=0
-modelabel = "Ascii"
+modelabel = "ASCII"
 
 def copycharacter(event):
     pyperclip.copy(letter)
