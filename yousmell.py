@@ -147,28 +147,36 @@ def LoadGame(event):
         alertlbl['text'] = 'Click again to load'
         loadconfirm = 1
     elif loadconfirm == 1:
-        with open('save.csv', 'r') as file:
-            reader = csv.reader(file)
-            for column in reader:
-                savelist = column
-                gourd = int(savelist[0])
-                helper = int(savelist[1])
-                helpercost = int(savelist[2])
-                skunk = int(savelist[3])
-                skunkcost = int(savelist[4])
-                totalgourd = int(savelist[5])
-                midski = int(savelist[6])
-                midskicost = int(savelist[7])
-        helpercost = int(helper * 1.4)
-        skunkcost = int(skunk * 1.7)
-        ScreenRefresh()
-        file.close()
-        loadconfirm = 0
-        alertlbl['text'] = 'Loaded Sucsessfully'
-        print("Load Pass")
+        try:
+            with open('save.csv', 'r') as file:
+                reader = csv.reader(file)
+                for column in reader:
+                    savelist = column
+                    gourd = int(savelist[0])
+                    helper = int(savelist[1])
+                    helpercost = int(savelist[2])
+                    skunk = int(savelist[3])
+                    skunkcost = int(savelist[4])
+                    totalgourd = int(savelist[5])
+                    midski = int(savelist[6])
+                    midskicost = int(savelist[7])
+            helpercost = int(helper * 1.4)
+            skunkcost = int(skunk * 1.7)
+            ScreenRefresh()
+            file.close()
+            loadconfirm = 0
+            alertlbl['text'] = 'Loaded Sucsessfully'
+            print("Load Pass")
+        except IndexError:
+            alertlbl['text'] = 'Error 2.2: Load fail - File Corrupted'
+        except FileNotFoundError:
+            alertlbl['text'] = 'Error 2.1: Load fail - File Not Found'
+        except:
+            alertlbl['text'] = 'Error 2: Load fail'
     else:
         alertlbl['text'] = 'Error 2: Load fail'
         print("Load Fail")
+        loadconfirm=0
     #print(savefile.read())
 def OpenAchevements(event):
     global totalgourd
