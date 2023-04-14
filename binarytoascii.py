@@ -27,18 +27,36 @@ def update():
         letter = str(buttonone) + str(buttontwo)+str(buttonthree)+str(buttonfour)+str(buttonfive)+str(buttonsix)+str(buttonseven)+str(buttoneight)
         letter = chr(int(letter,2))
         lbl['text']=letter
-    else:
+    elif mode==1:
         modelabel="Decimal"
         letter = str(buttonone) + str(buttontwo)+str(buttonthree)+str(buttonfour)+str(buttonfive)+str(buttonsix)+str(buttonseven)+str(buttoneight)
         letter = int(letter,2)
         lbl['text']=str(letter)
+    elif mode==2:
+        modelabel="Hex"
+        letter = str(buttonone) + str(buttontwo)+str(buttonthree)+str(buttonfour)+str(buttonfive)+str(buttonsix)+str(buttonseven)+str(buttoneight)
+        letter = str(hex(int(letter,2)))
+        letter = letter[2:]
+        letter = letter.upper()
+        lbl['text']=letter
+    elif mode==3:
+        modelabel="Octal"
+        letter = str(buttonone) + str(buttontwo)+str(buttonthree)+str(buttonfour)+str(buttonfive)+str(buttonsix)+str(buttonseven)+str(buttoneight)
+        letter = str(oct(int(letter,2)))
+        letter = letter[2:]
+        lbl['text']=letter
+
     window.title("Binary To "+modelabel+" Converter")
     btnswitch['text']=modelabel + " Mode"
 def switchclick(event):
     global mode
     if mode == 0:
         mode = 1
-    else:
+    elif mode==1:
+        mode = 2
+    elif mode ==2:
+        mode = 3
+    elif mode ==3:
         mode = 0
     update()
 def buttononeclick(event):
