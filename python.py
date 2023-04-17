@@ -8,6 +8,7 @@ def doInputs():
         y = input("did you have your birthday yet this year? ")
     except ValueError:
        print("age must be integer")
+       doInputs()
 z = int(datetime.now().year)
 doInputs()
 y = y.lower()
