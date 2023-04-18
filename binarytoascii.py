@@ -37,6 +37,7 @@ def update():
         modelabel="Hex"
         letter = str(buttonzero) + str(buttonone) + str(buttontwo)+str(buttonthree)+str(buttonfour)+str(buttonfive)+str(buttonsix)+str(buttonseven)+str(buttoneight)
         letter = str(hex(int(letter,2)))
+        #fun fact! truncating because hex always has a prefix in python
         letter = letter[2:]
         letter = letter.upper()
         lbl['text']=letter
@@ -44,6 +45,7 @@ def update():
         modelabel="Octal"
         letter = str(buttonzero) + str(buttonone) + str(buttontwo)+str(buttonthree)+str(buttonfour)+str(buttonfive)+str(buttonsix)+str(buttonseven)+str(buttoneight)
         letter = str(oct(int(letter,2)))
+        #again, trunkating because there is a mandatory prefix
         letter = letter[2:]
         lbl['text']=letter
     btn0['text'] = str(buttonzero)
