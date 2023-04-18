@@ -46,7 +46,16 @@ def update():
         letter = str(oct(int(letter,2)))
         letter = letter[2:]
         lbl['text']=letter
-
+    btn0['text'] = str(buttonzero)
+    btn1['text'] = str(buttonone)
+    btn2['text'] = str(buttontwo)
+    btn3['text'] = str(buttonthree)
+    btn4['text'] = str(buttonfour)
+    btn5['text'] = str(buttonfive)
+    btn6['text'] = str(buttonsix)
+    btn7['text'] = str(buttonseven)
+    btn8['text'] = str(buttoneight)
+    
     window.title("Binary To "+modelabel+" Converter")
     btnswitch['text']=modelabel + " Mode"
 def switchclick(event):
@@ -60,13 +69,32 @@ def switchclick(event):
     elif mode ==3:
         mode = 0
     update()
+def clear(event):
+    global buttonzero
+    global buttonone
+    global buttontwo
+    global buttonthree
+    global buttonfour
+    global buttonfive
+    global buttonsix
+    global buttonseven
+    global buttoneight
+    buttonzero = 0
+    buttonone=0
+    buttontwo=0
+    buttonthree=0
+    buttonfour=0
+    buttonfive=0
+    buttonsix=0
+    buttonseven =0
+    buttoneight = 0
+    update()
 def buttonzeroclick(event):
     global buttonzero
     if buttonzero ==0:
         buttonzero = 1
     else:
         buttonzero = 0
-    btn0['text'] = str(buttonzero)
     update()
 def buttononeclick(event):
     global buttonone
@@ -74,7 +102,6 @@ def buttononeclick(event):
         buttonone=1
     else:
         buttonone=0
-    btn1['text'] = str(buttonone)
     update()
 def buttontwoclick(event):
     global buttontwo
@@ -82,7 +109,6 @@ def buttontwoclick(event):
         buttontwo=1
     else:
         buttontwo=0
-    btn2['text'] = str(buttontwo)
     update()
 def buttonthreeclick(event):
     global buttonthree
@@ -90,7 +116,6 @@ def buttonthreeclick(event):
         buttonthree=1
     else:
         buttonthree=0
-    btn3['text'] = str(buttonthree)
     update()
 def buttonfourclick(event):
     global buttonfour
@@ -98,7 +123,6 @@ def buttonfourclick(event):
         buttonfour=1
     else:
         buttonfour=0
-    btn4['text'] = str(buttonfour)
     update()
 def buttonfiveclick(event):
     global buttonfive
@@ -106,7 +130,6 @@ def buttonfiveclick(event):
         buttonfive=1
     else:
         buttonfive=0
-    btn5['text'] = str(buttonfive)
     update()
 def buttonsixclick(event):
     global buttonsix
@@ -114,7 +137,6 @@ def buttonsixclick(event):
         buttonsix=1
     else:
         buttonsix=0
-    btn6['text'] = str(buttonsix)
     update()
 def buttonsevenclick(event):
     global buttonseven
@@ -122,7 +144,6 @@ def buttonsevenclick(event):
         buttonseven=1
     else:
         buttonseven=0
-    btn7['text'] = str(buttonseven)
     update()
 def buttoneightclick(event):
     global buttoneight
@@ -130,7 +151,6 @@ def buttoneightclick(event):
         buttoneight=1
     else:
         buttoneight=0
-    btn8['text'] = str(buttoneight)
     update()
 def secretbutton(event):
     btn0.place(x=200,y=450)
@@ -162,6 +182,7 @@ copybtn = Button(window,font=("Arial", 15), text="Copy Character To Clipboard")
 copybtn.place(x=520,y=600)
 #function calling time yay
 btnswitch.bind('<Button-1>',switchclick)
+btnswitch.bind('<Button-3>',clear)
 btn0.bind('<Button-1>',buttonzeroclick)
 btn1.bind('<Button-1>', buttononeclick)
 btn2.bind('<Button-1>', buttontwoclick)
