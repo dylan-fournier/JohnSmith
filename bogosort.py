@@ -3,7 +3,7 @@ import time
 global myList
 global myListStatic
 random.seed()
-myListStatic = [1,3,65,13,19,25,76,67,112,13]
+myListStatic = [2,1,3,4,5,6,7,8,9,17,18,19,20]
 #myListStatic = [1,3,2]
 def bogoSort():
     random.shuffle(myList)
