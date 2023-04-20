@@ -27,7 +27,7 @@ def orderChecker():
                 return False
             if i == len(myList):
                 return True
-numofloops = 100
+numofloops = 1
 timefinal = 0
 for x in range(numofloops):
     time1 = time.time()
@@ -38,4 +38,4 @@ for x in range(numofloops):
     timefinal = timefinal + (time2-time1)
     print(myList)
     print("done in "+ str(time2-time1))
-print("That Bubblesort took "+str(timefinal/numofloops)+" Seconds, on average")
+print("That Bubblesort took "+str(timefinal/numofloops)+" seconds, on average")
