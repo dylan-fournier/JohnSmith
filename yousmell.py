@@ -7,6 +7,7 @@ import math
 #hey dylan you need to fix the thing for big numbers in the mybuttonclicked event
 gourd = 0
 #what is clkamt used for? 
+autosave = False
 clkamt = 0
 midski = 0
 helper = 0
@@ -33,6 +34,11 @@ window.resizable(0,0)
 helpercost = int(helper*1.2)
 
 #functions go brrrr
+def SaveForRealzies():
+    with open('save.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([gourd, helper, helpercost, skunk, skunkcost, totalgourd, midski, midskicost, zero, zero, zero, zero, zero, zero, zero, zero, zero, zero]) #have at least 5 zeroes betweeen version so save files can update properly
+    file.close()
 def ScreenRefresh():
     lbl2['text'] = "You are " + str(gourd) + "%" + " smelly"
     lbl3['text'] = str(int(helper + skunk+(midski*100)) + 1) + "% SPC (Smell Per Click)"
@@ -123,10 +129,7 @@ def SaveGame(event):
         alertlbl['text'] = 'Click again to Save'
         saveconfirm = 1
     elif saveconfirm == 1:
-        with open('save.csv', 'w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow([gourd, helper, helpercost, skunk, skunkcost, totalgourd, midski, midskicost, zero, zero, zero, zero, zero, zero, zero, zero, zero, zero]) #have at least 5 zeroes betweeen version so save files can update properly
-        file.close()
+        SaveForRealzies()
         saveconfirm = 0
         alertlbl['text'] = 'Saved Sucsessfully'
         print("Save Pass")
@@ -225,3 +228,5 @@ acvmtbtn.bind('<Button-1>', OpenAchevements)
 window.mainloop()
 #unnecesary pause
 #dnu = input("")
+if autosave == True:
+    SaveForRealzies()
