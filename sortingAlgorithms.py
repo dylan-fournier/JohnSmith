@@ -58,7 +58,7 @@ def insertionSort(myListStatic, numofloops=1):
     for i in range(numofloops):
         time1 = time.time()
         myList=myListStatic.copy()
-        while orderChecker(myList) ==False:
+        while orderChecker(myList) == False:
             myList=insertion(myList)
         time2 =time.time()
         timefinal= timefinal+ (time2-time1)
@@ -73,7 +73,8 @@ def insertion(myList):
                     pass
                 else:
                     for j in range(i):
-                        temp = myList[i-j]
-                        myList[i-j] = myList[i-j-1]
-                        myList[i-j-1] = temp
+                        if myList[i-j] < myList[i-j-1]:
+                            temp = myList[i-j]
+                            myList[i-j] = myList[i-j-1]
+                            myList[i-j-1] = temp
     return myList

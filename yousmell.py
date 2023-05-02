@@ -32,12 +32,12 @@ window.resizable(0,0)
     #lbl2=Label(window, text=gourdstr + "%")
 #)
 helpercost = int(helper*1.2)
-
+autosave = False
 #functions go brrrr
 def SaveForRealzies():
     with open('save.csv', 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow([gourd, helper, helpercost, skunk, skunkcost, totalgourd, midski, midskicost, zero, zero, zero, zero, zero, zero, zero, zero, zero, zero]) #have at least 5 zeroes betweeen version so save files can update properly
+            writer.writerow([gourd, helper, helpercost, skunk, skunkcost, totalgourd, midski, midskicost, autosave, zero, zero, zero, zero, zero, zero, zero, zero, zero, zero]) #have at least 5 zeroes betweeen version so save files can update properly
     file.close()
 def ScreenRefresh():
     lbl2['text'] = "You are " + str(gourd) + "%" + " smelly"
@@ -109,13 +109,18 @@ def MyButtonClicked(event):
         totalgourd = int(totalgourd) + int(helper) + 1 + int(skunk)
     loadconfirm = 0
     saveconfirm = 0
-    print(str(gourd) + "g")
-    print(str(helper) + "h")
-    print(str(int(skunk/4)) + "sk")
     lbl2['text'] = "You are " + str(gourd) + "%" + " smelly"
 def Crash(event):
     print("Error 1, Contact <developer> If You See This More Than Once")
     exit()
+def AutosaveToggle(event):
+    global autosave
+    if autosave == True:
+        autosave = False
+        alertlbl['text'] = "Autosave Off"
+    else:
+        autosave = True
+        alertlbl['text'] = "Autosave On"
 def SaveGame(event):
     global gourd
     global helper
@@ -146,6 +151,7 @@ def LoadGame(event):
     global loadconfirm
     global midski
     global midskicost
+    global autosave
     if loadconfirm == 0:
         alertlbl['text'] = 'Click again to load'
         loadconfirm = 1
@@ -163,6 +169,7 @@ def LoadGame(event):
                     totalgourd = int(savelist[5])
                     midski = int(savelist[6])
                     midskicost = int(savelist[7])
+                    autosave = bool(savelist[8])
             helpercost = int(helper * 1.4)
             skunkcost = int(skunk * 1.7)
             ScreenRefresh()
@@ -223,6 +230,7 @@ btn2.bind('<Button-1>', BuyHelper)
 midskibuybtn.bind('<Button-1>',BuyMidski)
 #btn2.bind('<Button-3>', Crash)
 savebtn.bind('<Button-1>', SaveGame)
+savebtn.bind('<Button-3>', AutosaveToggle)
 acvmtbtn.bind('<Button-1>', OpenAchevements)
 #having the mainloop right before the exit means the window closing closes the program
 window.mainloop()
