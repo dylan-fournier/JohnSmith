@@ -8,7 +8,7 @@ have11AceDealer = False
 random.seed()
 chips = 100
 global suitsList
-suitsList = ["Spades", "Clubs", "Diamonds", "Hearts"]
+suitsList = ("Spades", "Clubs", "Diamonds", "Hearts")
 class Card:
     def __init__(self,suit,number):
         self.cardsuit=suit
