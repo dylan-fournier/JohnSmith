@@ -42,6 +42,8 @@ blackjackDeck.shuffle()
 #init human
 playAgain = 1
 while playAgain == 1:
+    have11AceHuman = False
+    have11AceDealer = False
     try:
         x = 1
         while x == 1:
@@ -126,7 +128,12 @@ while playAgain == 1:
                     humanStr = humanStr + str(i.num) + " "
                     humanScore = humanScore + i.num
             
-            print("Dealers cards: " + dealerStr+ " Score: " + str(dealerScore))
+            if have11AceDealer == True and dealerScore == 21:
+                print("Dealer's Cards: "+ dealerStr + " Score: " + "BlackJack!")
+            elif have11AceDealer == False:
+                print("Dealer's Cards: "+ dealerStr + " Score: " + str(dealerScore))
+            else:
+                print("Dealer's Cards: "+ dealerStr + " Score: Soft " + str(dealerScore))
             print()
             if have11AceHuman == True and humanScore == 21:
                 print("Your Cards: "+ humanStr + " Score: " + "BlackJack!")
@@ -164,9 +171,10 @@ while playAgain == 1:
                     dealerScore = dealerScore + 10
                 elif i.num == 1:
                     dealerStr=dealerStr + "A "
-                    if dealerScore +11 > 21:
+                    if dealerScore + 11 > 21:
                         dealerScore = dealerScore + 1
                     else:
+                        have11AceDealer = True
                         dealerScore = dealerScore + 11 
                 else:
                     dealerStr = dealerStr + str(i.num) + " "
@@ -191,7 +199,12 @@ while playAgain == 1:
             if humanScore > 21 and have11AceHuman:
                 humanScore = humanScore - 10
                 have11AceHuman = False
-            print("Dealers cards: " + dealerStr + " Score: " + str(dealerScore))
+            if have11AceDealer == True and dealerScore == 21:
+                print("Dealer's Cards: "+ dealerStr + " Score: " + "BlackJack!")
+            elif have11AceDealer == False:
+                print("Dealer's Cards: "+ dealerStr + " Score: " + str(dealerScore))
+            else:
+                print("Dealer's Cards: "+ dealerStr + " Score: Soft " + str(dealerScore))
             print()
             if have11AceHuman == True and humanScore == 21:
                 print("Your Cards: "+ humanStr + " Score: " + "BlackJack!")
@@ -210,7 +223,7 @@ while playAgain == 1:
                     print()
                     dealerHand.append(blackjackDeck.draw())
                     dealerHit = True
-                elif dealerScore <= 17:
+                elif dealerScore < 17:
                     print("Dealer Hits")
                     print()
                     dealerHand.append(blackjackDeck.draw())
