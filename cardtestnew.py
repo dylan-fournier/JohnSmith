@@ -1,10 +1,10 @@
 import random
+from printWithoutNewline import prnt
 random.seed()
 global suitsList, cardIndicatorList
 suitsList = ("Spades", "Clubs", "Diamonds", "Hearts")
 cardIndicatorList = ("J","Q","K")
 discardPile = []
-
 
 class Card:
     def __init__(self,suit,number):
@@ -30,14 +30,18 @@ class Deck:
         random.shuffle(self.cardsList)
     def draw(self):
         return self.cardsList.pop(0)
-class Player:
+
+class BlackjackPlayer:
     def __init__(self,name="Player"):
         self.name = name
         self.hand = []
         self.has11Ace = False
 
     def __str__(self):
-        return self.name + str(self.hand)
+        templist = []
+        for i in self.hand:
+            templist.append(f"{i}")
+        return self.name +" "+ str(templist)
     def handStr(self):
         strtemp = ""
         for i in self.hand:
@@ -50,8 +54,3 @@ class Player:
             
             strtemp = strtemp + temp + " "
         return strtemp
-    
-def scoreTotal(player):
-    for i in player.hand:
-
-        

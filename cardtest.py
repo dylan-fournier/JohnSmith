@@ -149,12 +149,20 @@ while playAgain == 1:
                 print("You Bust!")
                 hit = False
             else:
-                askHit = input("Hit or Stand? ")
-                if askHit == "Hit":
-                    humanHand.append(blackjackDeck.draw())
-                    hit=True
-                else:
-                    hit=False
+                x = 1
+                while x == 1:
+                    try:
+                        askHit = input("Hit or Stand? ")
+                        if askHit != "Hit" and askHit != "Stand":
+                            raise TypeError("Error")
+                        if askHit == "Hit":
+                            humanHand.append(blackjackDeck.draw())
+                            hit=True
+                        else:
+                            hit=False
+                        x = 0
+                    except:
+                        print("Must Be \"Hit\" or \"Stand\"")
         if dealerScore > 21:
             print("\nDealer Stands")
             dealerHit = False
