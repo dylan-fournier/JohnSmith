@@ -11,7 +11,7 @@ class Card:
         self.cardsuit=suit
         self.num=number
     def __str__(self):
-        return f"{self.cardsuit},{self.num}"
+        return f"{self.num} of {self.cardsuit}"
 class Deck:
     def __init__(self):
         self.cardsList = []
@@ -41,7 +41,7 @@ class BlackjackPlayer:
         templist = []
         for i in self.hand:
             templist.append(f"{i}")
-        return self.name +" "+ str(templist)
+        return self.name +" has: "+ str(templist)
     def handStr(self):
         strtemp = ""
         for i in self.hand:
@@ -54,3 +54,10 @@ class BlackjackPlayer:
             
             strtemp = strtemp + temp + " "
         return strtemp
+
+cards = Deck()
+cards.shuffle()
+human = BlackjackPlayer("John")
+for i in range(2):
+    human.hand.append(cards.draw())
+print(human)
