@@ -4,6 +4,8 @@ random.seed()
 global suitsList, cardIndicatorList
 suitsList = ("Spades", "Clubs", "Diamonds", "Hearts")
 cardIndicatorList = ("J","Q","K")
+cardIndicatorListLong = ("Jack","Queen","King")
+
 discardPile = []
 
 class Card:
@@ -11,6 +13,10 @@ class Card:
         self.cardsuit=suit
         self.num=number
     def __str__(self):
+        num = self.num
+        if num > 10:
+            num = num - 11
+            return f"{cardIndicatorListLong[num]} of {self.cardsuit}"
         return f"{self.num} of {self.cardsuit}"
 class Deck:
     def __init__(self):
@@ -36,6 +42,7 @@ class BlackjackPlayer:
         self.name = name
         self.hand = []
         self.has11Ace = False
+        self.Perfect = False
 
     def __str__(self):
         templist = []
@@ -57,7 +64,10 @@ class BlackjackPlayer:
 
 cards = Deck()
 cards.shuffle()
-human = BlackjackPlayer("John")
+human = BlackjackPlayer("Human")
+dealer = BlackjackPlayer("Dealer")
 for i in range(2):
     human.hand.append(cards.draw())
+    dealer.hand.append(cards.draw())
+print(dealer)
 print(human)
