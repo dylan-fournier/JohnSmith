@@ -14,6 +14,8 @@ class Card:
         self.num=number
     def __str__(self):
         num = self.num
+        if num == 1:
+            return f"Ace of {self.cardsuit}"
         if num > 10:
             num = num - 11
             return f"{cardIndicatorListLong[num]} of {self.cardsuit}"
@@ -61,6 +63,19 @@ class BlackjackPlayer:
             
             strtemp = strtemp + temp + " "
         return strtemp
+    def score(self):
+        score = 0
+        for i in self.hand:
+            if i.num > 10:
+                score += 10
+            elif i.num==1:
+                if score + 11 <= 21:
+                    score += 11
+                else:
+                    score += 1
+            else:
+                score += i.num
+        return score
 
 cards = Deck()
 cards.shuffle()
@@ -71,3 +86,5 @@ for i in range(2):
     dealer.hand.append(cards.draw())
 print(dealer)
 print(human)
+print(dealer.score())
+print(human.score())
