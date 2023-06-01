@@ -1,7 +1,8 @@
 import random
+import time
 from printWithoutNewline import prnt
 random.seed()
-global suitsList, cardIndicatorList
+global suitsList, cardIndicatorList, cardIndicatorListLong
 suitsList = ("Spades", "Clubs", "Diamonds", "Hearts")
 cardIndicatorList = ("J","Q","K")
 cardIndicatorListLong = ("Jack","Queen","King")
@@ -44,7 +45,7 @@ class BlackjackPlayer:
         self.name = name
         self.hand = []
         self.has11Ace = False
-        self.Perfect = False
+        self.hasBlackjack = False
 
     def __str__(self):
         templist = []
@@ -65,26 +66,140 @@ class BlackjackPlayer:
         return strtemp
     def score(self):
         score = 0
+        self.have11Ace = False
+        aceCounter = 0
         for i in self.hand:
             if i.num > 10:
                 score += 10
             elif i.num==1:
-                if score + 11 <= 21:
-                    score += 11
-                else:
-                    score += 1
+                aceCounter+=1
             else:
                 score += i.num
+        for i in range(aceCounter):
+            if score + 11 < 21 and self.have11Ace == False:
+                score += 11
+                self.have11Ace = True
+            else:
+                score+=1
+        if len(self.hand) == 2 and score == 21:
+            self.hasBlackjack = True
+        else:
+            self.hadBlackjack = False
         return score
 
-cards = Deck()
-cards.shuffle()
+blackjackDeck = Deck()
+blackjackDeck.shuffle()
 human = BlackjackPlayer("Human")
 dealer = BlackjackPlayer("Dealer")
-for i in range(2):
-    human.hand.append(cards.draw())
-    dealer.hand.append(cards.draw())
-print(dealer)
-print(human)
-print(dealer.score())
-print(human.score())
+chips = 100
+
+playAgain = 1
+while playAgain == 1:
+    have11AceHuman = False
+    have11AceDealer = False
+    try:
+        x = 1
+        while x == 1:
+            try:
+                bet = int(input("How much do you want to bet (Current Amount: "+ str(chips)+")? "))
+                x = 0
+            except:
+                print("Must be number")
+        chips = chips - bet
+        for i in range(2):
+            human.hand.append(blackjackDeck.draw())
+            dealer.hand.append(blackjackDeck.draw())
+        hit = True
+        while hit == True:
+            print("Dealer's Cards: "+ dealer.handStr() + " Score: " + str(dealer.score()))
+            print()
+            print("Your Cards: "+ human.handStr() + " Score: " + str(human.score()))
+            print()
+            if human.score() > 21:
+                print("You Bust!")
+                hit = False
+            else:
+                x = 1
+                while x == 1:
+                    try:
+                        askHit = input("Hit or Stand? ")
+                        if askHit != "Hit" and askHit != "Stand":
+                            raise TypeError("Error")
+                        if askHit == "Hit":
+                            human.hand.append(blackjackDeck.draw())
+                            hit=True
+                        else:
+                            hit=False
+                        x = 0
+                    except:
+                        print("Must Be \"Hit\" or \"Stand\"")
+        if dealer.score() > 21:
+            print("\nDealer Stands")
+            dealerHit = False
+        else:
+            dealerHit = True
+        while dealerHit == True:
+            print("Dealer's Cards: "+ dealer.handStr() + " Score: " + str(dealer.score()))
+            print()
+            print("Your Cards: "+ human.handStr() + " Score: " + str(human.score()))
+            print()
+            time.sleep(1)
+            if dealer.score() > 21:
+                print("Dealer Bust!")
+                dealerHit=False
+            else:
+                if dealer.score() == 17 and have11AceDealer:
+                    print("Dealer Hits")
+                    print()
+                    dealer.hand.append(blackjackDeck.draw())
+                    dealerHit = True
+                elif dealer.score() < 17:
+                    print("Dealer Hits")
+                    print()
+                    dealer.hand.append(blackjackDeck.draw())
+                    dealerHit = True
+                else:
+                    print("dealer Stands")
+                    dealerHit = False
+        #final score check
+        if dealer.score() > 21 and human.score() > 21:
+            print("Tie!")
+            chips = chips + bet
+        elif human.score() > 21:
+            print("House Wins")
+        elif dealer.score() >21:
+            print("You WIn!")
+            chips = chips + (bet*2)
+        elif dealer.score() == human.score() and human.hasBlackjack == True and dealer.hasBlackjack == True:
+            print("Tie!")
+            chips = chips + bet
+        elif dealer.score() == human.score() and human.hasBlackjack == True:
+            print("you win")
+            chips = chips + (bet*2)
+        elif dealer.score() == human.score() and dealer.hasBlackjack == True:
+            print("House Wins")
+        elif dealer.score() > human.score():
+            print("House Wins")
+        elif human.score() > dealer.score():
+            print("You Win")
+            chips = chips + (bet*2)
+        elif human.score()== dealer.score():
+            print("Tie")
+            chips = chips + bet
+        for i in range(len(human.hand)):
+            discardPile.append(human.hand.pop(0))
+        for i in range(len(dealer.hand)):
+            discardPile.append(dealer.hand.pop(0))
+        print("You have "+str(chips)+" chips")
+        print("Want to play again? (1/0)")
+        try:
+            playAgain = int(input())
+        except:
+            playAgain = 0
+    except IndexError:
+        for i in range(len(human.hand)):
+            discardPile.append(human.hand.pop(0))
+        for i in range(len(dealer.hand)):
+            discardPile.append(dealer.hand.pop(0))
+        print("Out of cards, Shuffling...")
+        blackjackDeck.shuffle()
