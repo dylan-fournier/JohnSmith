@@ -1,8 +1,9 @@
 import random
 import time
 from printWithoutNewline import prnt
+import csv
 random.seed()
-global suitsList, cardIndicatorList, cardIndicatorListLong
+global suitsList, cardIndicatorList, cardIndicatorListLong, chips
 suitsList = ("Spades", "Clubs", "Diamonds", "Hearts")
 cardIndicatorList = ("J","Q","K")
 cardIndicatorListLong = ("Jack","Queen","King")
@@ -91,12 +92,17 @@ blackjackDeck = Deck()
 blackjackDeck.shuffle()
 human = BlackjackPlayer("Human")
 dealer = BlackjackPlayer("Dealer")
-chips = 100
+try:
+    with open('chips.csv', 'r') as file:
+        reader = csv.reader(file)
+        for column in reader:
+            chips = int(column[0])
+        file.close()
+except:
+    chips = 100
 
 playAgain = 1
 while playAgain == 1:
-    have11AceHuman = False
-    have11AceDealer = False
     try:
         x = 1
         while x == 1:
@@ -148,7 +154,7 @@ while playAgain == 1:
                 print("Dealer Bust!")
                 dealerHit=False
             else:
-                if dealer.score() == 17 and have11AceDealer:
+                if dealer.score() == 17 and dealer.has11Ace:
                     print("Dealer Hits")
                     print()
                     dealer.hand.append(blackjackDeck.draw())
@@ -201,5 +207,10 @@ while playAgain == 1:
             discardPile.append(human.hand.pop(0))
         for i in range(len(dealer.hand)):
             discardPile.append(dealer.hand.pop(0))
-        print("Out of cards, Shuffling...")
+        print("Out of cards, Shuffling...\nDeck has been reset.\n")
         blackjackDeck.shuffle()
+
+with open('chips.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow([chips])
+    file.close()
