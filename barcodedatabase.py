@@ -5,7 +5,8 @@ class item():
         self.name = name
         self.price = float(price)
     def __str__(self):
-        return f"name:{self.name} | Price:{self.price} "
+        key = [k for k, v in database.items() if v == self][0]
+        return f"name:{self.name} | code: {key} | Price:{self.price} "
 try:
     with open('database of barcodes.pkl', 'rb') as f:
         database = pickle.load(f)
