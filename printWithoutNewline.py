@@ -1,2 +1,2 @@
-def prnt(x):
+def prnt(x=""):
     print(x, end = '')
