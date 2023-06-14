@@ -1,4 +1,18 @@
 import pickle
+global temptotal
+temptotal = 0
+def checkout():
+    scanLoop = True
+    while scanLoop:
+        barcodeIn = input("? ")
+        if barcodeIn == str(0):
+            scanLoop = False
+        else:
+            try:
+                temptotal = temptotal + database[barcodeIn].price
+            except:
+                print("item does not exist")
+        print("Total Price: $"+str(temptotal))
 
 class item():
     def __init__(self,name,price):
@@ -45,17 +59,7 @@ while mainLoop:
         print()
     elif firstIn == 3:
         temptotal = 0
-        scanLoop = True
-        while scanLoop:
-            barcodeIn = input("? ")
-            if barcodeIn == str(0):
-                scanLoop = False
-            else:
-                try:
-                    temptotal = temptotal + database[barcodeIn].price
-                except:
-                    print("item does not exist")
-            print("Total Price: $"+str(temptotal))
+        checkout()
     elif firstIn == 4:
         x = input("Barcode? ")
         try:
@@ -63,5 +67,14 @@ while mainLoop:
             database.pop(x)
         except:
             print("Not in database yet")
+    else:
+        temptotal = 0
+        barcodeIn = firstIn
+        try:
+            temptotal = temptotal + database[barcodeIn].price
+        except:
+            print("item does not exist")
+        print("Total Price: $"+str(temptotal))
+        checkout()
 with open('database of barcodes.pkl', 'wb') as f:
     pickle.dump(database, f)
